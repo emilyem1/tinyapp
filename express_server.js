@@ -42,8 +42,14 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  console.log(req.body); // Log the POST request body to the console
-  res.send("Ok"); // Respond with 'Ok' (we will replace this)
+  // Generate a random id for the new URL
+  const id = generateRandomString();
+  // Get the longURL from the request body 
+  const longURL = req.body.longURL;
+  // Add the id-longURL pair to the urlDatabase
+  urlDatabase[id] = longURL;
+  // Redirect to the page that displays the newly created URL
+  res.redirect(`/urls/${id}`);
 });
 
 app.get("/urls/:id", (req, res) => {
