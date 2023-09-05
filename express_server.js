@@ -2,6 +2,19 @@ const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
 
+// a function that returns a string of 6 random alphanumeric characters: 
+function generateRandomString() {
+  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let randomString = '';
+  for (let i = 0; i < 6; i++) {
+    /* math.random * characters.length gives a random number, with math.floor making sure it's not a number with a decimal */
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    /* populate empty '' with the .charAt the random number just produced in the characters string */
+    randomString += characters.charAt(randomIndex);
+  }
+  return randomString;
+}
+
 app.set("view engine", "ejs"); // tells express app to use EJS as template 
 
 const urlDatabase = {
