@@ -100,6 +100,10 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 });
 
+app.get("/register", (req, res) => {
+  res.render("register"); // Render the register.ejs template
+});
+
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
