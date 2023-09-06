@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require('cookie-parser')
 const app = express();
 const PORT = 8080; // default port 8080
 
@@ -15,12 +16,14 @@ function generateRandomString() {
   return randomString;
 }
 
-app.set("view engine", "ejs"); // tells express app to use EJS as template 
-
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
+
+app.set("view engine", "ejs"); // tells express app to use EJS as template 
+
+app.use(cookieParser()) // 
 
 app.use(express.urlencoded({ extended: true })); /* needs to be before all routes; will convert buffer body into string */ 
 
