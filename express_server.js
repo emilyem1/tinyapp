@@ -44,7 +44,11 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  const templateVars = {
+    username: req.cookies["username"],
+    urls: urlDatabase
+  };
+  res.render("urls_new", templateVars);
 });
 
 app.post("/urls", (req, res) => {
@@ -61,7 +65,7 @@ app.post("/urls", (req, res) => {
 app.get("/urls/:id", (req, res) => {
   const id = req.params.id; //will show just shortened id
   const longURL = urlDatabase[id]; //will show entire url including id
-  const templateVars = { id: id, longURL: longURL };
+  const templateVars = { id: id, longURL: longURL, username: req.cookies["username"]};
   res.render("urls_show", templateVars);
 });
 
