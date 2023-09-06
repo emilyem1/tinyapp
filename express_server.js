@@ -75,12 +75,18 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls")
 });
 
-  app.post("/urls/:id/edit", (req, res) => {
-    const id = req.params.id; // Get the id parameter from the URL
-    const newLongURL = req.body.newLongURL; // Get the updated URL from the form input
-    // Update the URL in urlDatabase using the id
-    urlDatabase[id] = newLongURL;
-    res.redirect(`/urls`);
+app.post("/urls/:id/edit", (req, res) => {
+  const id = req.params.id; // Get the id parameter from the URL
+  const newLongURL = req.body.newLongURL; // Get the updated URL from the form input
+  // Update the URL in urlDatabase using the id
+  urlDatabase[id] = newLongURL;
+  res.redirect(`/urls`);
+});
+
+app.post("/login", (req, res) => {
+  const { username } = req.body; // Get the username from the request body
+  res.cookie("username", username); // Set the username as a cookie
+  res.redirect("/urls"); // Redirect to the /urls page
 });
 
 app.get("/urls.json", (req, res) => {
