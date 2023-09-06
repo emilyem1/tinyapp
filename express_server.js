@@ -75,6 +75,13 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls")
 });
 
+  app.post("/urls/:id/edit", (req, res) => {
+    const id = req.params.id; // Get the id parameter from the URL
+    const newLongURL = req.body.newLongURL; // Get the updated URL from the form input
+    // Update the URL in urlDatabase using the id
+    urlDatabase[id] = newLongURL;
+    res.redirect(`/urls`);
+});
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
