@@ -23,7 +23,7 @@ const urlDatabase = {
 
 app.set("view engine", "ejs"); // tells express app to use EJS as template 
 
-app.use(cookieParser()) // 
+app.use(cookieParser()); // tells express app to use cookie-parser
 
 app.use(express.urlencoded({ extended: true })); /* needs to be before all routes; will convert buffer body into string */ 
 
@@ -36,7 +36,10 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-  const templateVars = { urls: urlDatabase };
+  const templateVars = {
+    username: req.cookies["username"],
+    urls: urlDatabase
+  };
   res.render("urls_index", templateVars);
 });
 
