@@ -95,6 +95,11 @@ app.post("/login", (req, res) => {
   res.redirect("/urls"); // Redirect to the /urls page
 });
 
+app.post("/logout", (req, res) => {
+  res.clearCookie("username") // Clear the "username" cookie
+  res.redirect("/urls");
+});
+
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
