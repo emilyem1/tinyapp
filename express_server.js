@@ -123,6 +123,10 @@ app.post("/login", (req, res) => {
   res.redirect("/urls"); // Redirect to the /urls page
 });
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 app.post("/logout", (req, res) => {
   res.clearCookie("userId") // Clear the "username" cookie
   res.redirect("/urls");
