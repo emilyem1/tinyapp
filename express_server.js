@@ -16,6 +16,17 @@ function generateRandomString() {
   return randomString;
 }
 
+// a function that checks if the email already exists in users object
+const checkEmail = function (email) {
+  for (const userId in users) {
+    if (users[userId].email === email) {
+      return null;
+    } else {
+      return users;
+    }
+  } 
+}
+
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
@@ -123,8 +134,17 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
   const userId = generateRandomString(); // Generate a random userId
-  const { email, password } = req.body; // Get the email and password 
-  users[userId] = { // Add new user to global users object 
+  const { email, password } = req.body; // Get the email and password
+  // Check for empty email or password
+  if (!email || !password) {
+    return res.status(400).send("Enter valid email and password");
+  } 
+  // Check if the email is already in use
+  if (checkEmail(email) === null) {
+      return res.status(400).send("Email already in use");
+  } 
+  // Add new user to global users object
+  users[userId] = { 
     id: userId,
     email: email,
     password: password
