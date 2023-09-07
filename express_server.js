@@ -20,12 +20,11 @@ function generateRandomString() {
 const checkEmail = function (email) {
   for (const userId in users) {
     if (users[userId].email === email) {
-      return null;
-    } else {
-      return users;
+      return users[userId]; // Return the user object if the email is found
     }
-  } 
-}
+  }
+  return null; // Return null if the email is not found after checking all users
+};
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -118,9 +117,16 @@ app.post("/urls/:id/edit", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const { username } = req.body; // Get the username from the request body
-  res.cookie("userId", userId); // Set the username as a cookie
-  res.redirect("/urls"); // Redirect to the /urls page
+  const { email, password } = req.body;
+  const user = checkEmail(email); // Check if the email exists in the users
+  if (user === null) {
+    res.status(403).send("Invalid email or password");
+  } else if (user.password !== password) {
+    res.status(403).send("Invalid email or password");
+  } else {
+    res.cookie("userId", user.id);
+    res.redirect("/urls");
+  }
 });
 
 app.get("/login", (req, res) => {
