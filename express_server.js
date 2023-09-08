@@ -66,6 +66,10 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
+  if (!req.cookies.userId) {
+    res.redirect("/login");
+    return;
+  }
   const templateVars = {
     user: users[req.cookies["userId"]],
     urls: urlDatabase
@@ -74,14 +78,18 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  // Generate a random id for the new URL
-  const id = generateRandomString();
-  // Get the longURL from the request body 
-  const longURL = req.body.longURL;
-  // Add the id-longURL pair to the urlDatabase
-  urlDatabase[id] = longURL;
-  // Redirect to the page that displays the newly created URL
-  res.redirect(`/urls/${id}`);
+  if (!req.cookies.userId) { // If not logged in
+    res.status(403).send("You must be logged in to shorten URLs");
+  } else {
+    // Generate a random id for the new URL
+    const id = generateRandomString();
+    // Get the longURL from the request body 
+    const longURL = req.body.longURL;
+    // Add the id-longURL pair to the urlDatabase
+    urlDatabase[id] = longURL;
+    // Redirect to the page that displays the newly created URL
+    res.redirect(`/urls/${id}`);
+  }
 });
 
 app.get("/urls/:id", (req, res) => {
