@@ -118,8 +118,20 @@ app.post("/urls", (req, res) => {
 
 app.get("/urls/:id", (req, res) => {
   const id = req.params.id; //will show just shortened id
-  const longURL = urlDatabase[id].longURL; //will show entire url including id
-  const templateVars = { id: id, longURL: longURL,  user: users[req.cookies["userId"]]};
+  const url = urlDatabase[id];
+  if (!url) {
+    res.status(404).send("URL not found"); 
+    return;
+  }
+  const templateVars = { id: id, longURL: url.longURL,  user: users[req.cookies["userId"]]};
+  if (!req.cookies.userId) {
+    res.status(403).send("You must be logged in to view URLs");
+    return;
+  } 
+  if (req.cookies.userId !== url.userID) {
+    res.status(403).send("You do not have permission to view this URL");
+    return;
+  } 
   res.render("urls_show", templateVars);
 });
 
