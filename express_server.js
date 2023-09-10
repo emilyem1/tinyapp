@@ -117,21 +117,21 @@ app.post("/urls", (req, res) => {
 });
 
 app.get("/urls/:id", (req, res) => {
-  const id = req.params.id; //will show just shortened id
+  const id = req.params.id;
   const url = urlDatabase[id];
   if (!url) {
     res.status(404).send("URL not found"); 
     return;
   }
-  const templateVars = { id: id, longURL: url.longURL,  user: users[req.cookies["userId"]]};
+  const templateVars = { id: id, longURL: url.longURL, user: users[req.cookies["userId"]] };
   if (!req.cookies.userId) {
     res.status(403).send("You must be logged in to view URLs");
     return;
-  } 
+  }
   if (req.cookies.userId !== url.userID) {
     res.status(403).send("You do not have permission to view this URL");
     return;
-  } 
+  }
   res.render("urls_show", templateVars);
 });
 
@@ -148,6 +148,14 @@ app.get("/u/:id", (req, res) => {
 app.post("/urls/:id/delete", (req, res) => {
   const id = req.params.id; // Get the id parameter from the URL
   const url = urlDatabase[id];
+  if (!url) {
+    res.status(404).send("URL not found"); 
+    return;
+  }
+  if (!req.cookies.userId) {
+    res.status(403).send("You must be logged in to view URLs");
+    return;
+  }
   if (req.cookies.userId === url.userID) {
     delete urlDatabase[id]
     res.redirect("/urls")
