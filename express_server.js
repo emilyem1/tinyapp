@@ -26,8 +26,14 @@ const checkEmail = function (email) {
 };
 
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  b6UTxQ: {
+    longURL: "https://www.tsn.ca",
+    userID: "userRandomID",
+  },
+  i3BoGr: {
+    longURL: "https://www.google.ca",
+    userID: "user2RandomID",
+  },
 };
 
 const users = {
@@ -86,7 +92,7 @@ app.post("/urls", (req, res) => {
     // Get the longURL from the request body 
     const longURL = req.body.longURL;
     // Add the id-longURL pair to the urlDatabase
-    urlDatabase[id] = longURL;
+    urlDatabase[id] = { longURL: longURL, userID: req.cookies.userId };
     // Redirect to the page that displays the newly created URL
     res.redirect(`/urls/${id}`);
   }
@@ -94,14 +100,14 @@ app.post("/urls", (req, res) => {
 
 app.get("/urls/:id", (req, res) => {
   const id = req.params.id; //will show just shortened id
-  const longURL = urlDatabase[id]; //will show entire url including id
+  const longURL = urlDatabase[id].longURL; //will show entire url including id
   const templateVars = { id: id, longURL: longURL,  user: users[req.cookies["userId"]]};
   res.render("urls_show", templateVars);
 });
 
 app.get("/u/:id", (req, res) => {
   const id = req.params.id; // Get the id parameter from the URL
-  const longURL = urlDatabase[id]; // Retrieve the longURL from the urlDatabase
+  const longURL = urlDatabase[id].longURL; // Retrieve the longURL from the urlDatabase
   if (longURL) {
     res.redirect(longURL); // Redirect to the longURL if it exists
   } else {
@@ -111,16 +117,26 @@ app.get("/u/:id", (req, res) => {
 
 app.post("/urls/:id/delete", (req, res) => {
   const id = req.params.id; // Get the id parameter from the URL
-  delete urlDatabase[id]
-  res.redirect("/urls")
+  const url = urlDatabase[id];
+  if (req.cookies.userId === url.userID) {
+    delete urlDatabase[id]
+    res.redirect("/urls")
+  } else {
+    res.status(403).send("You do not have permission to delete this URL");
+  }
 });
 
 app.post("/urls/:id/edit", (req, res) => {
   const id = req.params.id; // Get the id parameter from the URL
-  const newLongURL = req.body.newLongURL; // Get the updated URL from the form input
-  // Update the URL in urlDatabase using the id
-  urlDatabase[id] = newLongURL;
-  res.redirect(`/urls`);
+  const newLongURL = req.body.newLongURL; // Get the updated URL from the input
+  const url = urlDatabase[id];
+  if (req.cookies.userId === url.userID) {
+    // Update the URL in urlDatabase using the id
+    urlDatabase[id].longURL = newLongURL;
+    res.redirect(`/urls`);
+  } else {
+    res.status(403).send("You do not have permission to edit this URL");
+  }
 });
 
 app.post("/login", (req, res) => {
