@@ -6,8 +6,8 @@ TinyApp is a web application crafted with Node and Express to allows users in si
 
 ## Final Product
 
-![Screenshot of the /urls path](https://user-images.githubusercontent.com/101762106/266916086-9825f9ea-1828-4080-beaa-b3ee0ed3c2f4.png) <!-- Replace with your project's actual screenshot -->
-![Screenshot of /urls/new path](https://user-images.githubusercontent.com/101762106/266915958-7448a3a0-6c37-4946-9af5-768981d91390.png) <!-- Replace with your project's actual screenshot -->
+![Screenshot of the /urls path](https://github.com/emilyem1/tinyapp/blob/main/docs/urlsScreenshot.png?raw=true) 
+![Screenshot of /urls/new path](https://github.com/emilyem1/tinyapp/blob/main/docs/newScreenshot.png?raw=true) 
 
 ## Core Dependencies
 
