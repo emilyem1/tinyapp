@@ -8,12 +8,12 @@ TinyApp is a web application crafted with Node and Express to allows users in si
 
 Discover your personalized TinyApp—a project that reflects your innovation and dedication to web development.
 
-![Your TinyApp Screenshot](#) <!-- Replace with your project's actual screenshot -->
-![Another Screenshot of Your TinyApp](#) <!-- Replace with your project's actual screenshot -->
+![Screenshot of the /urls path](https://user-images.githubusercontent.com/101762106/266916086-9825f9ea-1828-4080-beaa-b3ee0ed3c2f4.png) <!-- Replace with your project's actual screenshot -->
+![Screenshot of /urls/new path](https://user-images.githubusercontent.com/101762106/266915958-7448a3a0-6c37-4946-9af5-768981d91390.png) <!-- Replace with your project's actual screenshot -->
 
 ## Core Dependencies
 
-To bring your vision to life, this project relies on a selection of powerful technologies:
+To bring your TinyApp to life, this project relies on a selection of technologies:
 
 - **Node.js**: The backbone of your server-side operations.
 - **Express**: Fueling your web application with a robust framework.
@@ -29,4 +29,4 @@ You can use TinyApp by following these simple steps:
 
 2. **Start the Development Server**: Launch your development web server by executing the command `node express_server.js`. This will set the stage for exploring your unique TinyApp. You can also run it using the command `npm start` to keep the serving constantly updating if you make any changes to the code, that way you will not have to restart the server every time. 
 
-Now, you're all set to experience the magic of your TinyApp firsthand. Dive in and start shortening those long URLs with ease!
+Now, you're all set to experience your TinyApp firsthand. Dive in and start shortening those long URLs with ease!
