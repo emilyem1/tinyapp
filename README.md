@@ -6,8 +6,6 @@ TinyApp is a web application crafted with Node and Express to allows users in si
 
 ## Final Product
 
-Discover your personalized TinyApp—a project that reflects your innovation and dedication to web development.
-
 ![Screenshot of the /urls path](https://user-images.githubusercontent.com/101762106/266916086-9825f9ea-1828-4080-beaa-b3ee0ed3c2f4.png) <!-- Replace with your project's actual screenshot -->
 ![Screenshot of /urls/new path](https://user-images.githubusercontent.com/101762106/266915958-7448a3a0-6c37-4946-9af5-768981d91390.png) <!-- Replace with your project's actual screenshot -->
 
