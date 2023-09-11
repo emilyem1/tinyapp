@@ -9,11 +9,11 @@ const getUserByEmail = function (email, database) {
 };
 
 // a function that filters for URLS for the logged-in user
-const urlsForUser = function (id) {
+const urlsForUser = function (id, database) {
   const userUrls = {};
-  for (const userUrl in urlDatabase) { 
-    if (urlDatabase[userUrl].userID === id) { 
-      userUrls[userUrl] = urlDatabase[userUrl];
+  for (const userUrl in database) { 
+    if (database[userUrl].userID === id) { 
+      userUrls[userUrl] = database[userUrl];
     }
   }
   return userUrls;
