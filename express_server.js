@@ -25,10 +25,10 @@ function generateRandomString() {
   return randomString;
 }
 // a function that checks if the email already exists in users object
-const checkEmail = function (email) {
-  for (const userId in users) {
-    if (users[userId].email === email) {
-      return users[userId]; // Return the user object if the email is found
+const getUserByEmail = function (email, database) {
+  for (const userId in database) {
+    if (database[userId].email === email) {
+      return database[userId]; // Return the user object if the email is found
     }
   }
   return null; // Return null if the email is not found after checking all users
@@ -179,7 +179,7 @@ app.post("/urls/:id/edit", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  const user = checkEmail(email); // Check if the email exists in the users obj
+  const user = getUserByEmail(email, users); // Check if the email exists
   if (user === null) {
     res.status(403).send("Invalid email or password");
   } 
@@ -229,7 +229,7 @@ app.post("/register", (req, res) => {
     return res.status(400).send("Enter valid email and password");
   } 
   // Check if the email is already in use
-  if (checkEmail(email) !== null) {
+  if (getUserByEmail(email, users) !== null) {
       return res.status(400).send("Email already in use");
   } 
   // Hash the password using bcrypt
