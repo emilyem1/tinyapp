@@ -1,5 +1,5 @@
 // a function that checks if the email already exists in users object
-const getUserByEmail = function (email, database) {
+const getUserByEmail = function(email, database) {
   for (const userId in database) {
     if (database[userId].email === email) {
       return database[userId]; // Return the user object if the email is found
@@ -9,19 +9,19 @@ const getUserByEmail = function (email, database) {
 };
 
 // a function that filters for URLS for the logged-in user
-const urlsForUser = function (id, database) {
+const urlsForUser = function(id, database) {
   const userUrls = {};
-  for (const userUrl in database) { 
-    if (database[userUrl].userID === id) { 
+  for (const userUrl in database) {
+    if (database[userUrl].userID === id) {
       userUrls[userUrl] = database[userUrl];
     }
   }
   return userUrls;
 };
 
-// a function that returns a string of 6 random alphanumeric characters: 
-function generateRandomString() {
-  const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+// a function that returns a string of 6 random alphanumeric characters:
+const generateRandomString = function() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let randomString = '';
   for (let i = 0; i < 6; i++) {
     /* math.random * characters.length gives a random number, with math.floor making sure it's not a number with a decimal */
