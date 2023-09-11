@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieParser = require('cookie-parser')
+const bcrypt = require("bcryptjs");
 const app = express();
 const PORT = 8080; // default port 8080
 
@@ -37,27 +38,18 @@ const urlsForUser = function (id) {
 }
 
 const urlDatabase = {
-  b6UTxQ: {
-    longURL: "https://www.tsn.ca",
-    userID: "userRandomID",
-  },
-  i3BoGr: {
-    longURL: "https://www.google.ca",
-    userID: "user2RandomID",
-  },
+/* 
+* Will populate with urls through the urls/new path
+* Once a new url is created, the updated urlDatabase object will appear in
+* terminal
+*/
 };
 
 const users = {
-  userRandomID: {
-    id: "userRandomID",
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur",
-  },
-  user2RandomID: {
-    id: "user2RandomID",
-    email: "user2@example.com",
-    password: "dishwasher-funk",
-  },
+/* 
+* Will populate with users with hashed passwords through the /register path
+* Once registered, the updated users object will appear in terminal
+*/
 };
 
 app.set("view engine", "ejs"); // tells express app to use EJS as template 
@@ -111,6 +103,8 @@ app.post("/urls", (req, res) => {
     const longURL = req.body.longURL;
     // Add the id-longURL pair to the urlDatabase
     urlDatabase[id] = { longURL: longURL, userID: req.cookies.userId };
+    // Make sure the urlDatabase object updated
+    console.log(urlDatabase);
     // Redirect to the page that displays the newly created URL
     res.redirect(`/urls/${id}`);
   }
@@ -182,7 +176,9 @@ app.post("/login", (req, res) => {
   const user = checkEmail(email); // Check if the email exists in the users obj
   if (user === null) {
     res.status(403).send("Invalid email or password");
-  } else if (user.password !== password) {
+  } 
+  const passwordMatch = bcrypt.compareSync(password, user.password);
+  if (!passwordMatch) { // if passwordMatch returns false 
     res.status(403).send("Invalid email or password");
   } else {
     res.cookie("userId", user.id);
@@ -230,11 +226,13 @@ app.post("/register", (req, res) => {
   if (checkEmail(email) !== null) {
       return res.status(400).send("Email already in use");
   } 
+  // Hash the password using bcrypt
+  const hashedPassword = bcrypt.hashSync(password, 10);
   // Add new user to global users object
   users[userId] = { 
     id: userId,
     email: email,
-    password: password
+    password: hashedPassword // Store hashed password
   };
   res.cookie("userId", userId) // create a cookie with the userId
   console.log(users); // check to see if users object updated 
